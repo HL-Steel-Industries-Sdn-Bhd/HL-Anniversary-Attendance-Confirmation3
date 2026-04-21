@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="zh-MY">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>双庆典报名 | Pendaftaran Acara Dwi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Noto Sans', system-ui, sans-serif;
+      background: #eef2f5;
+      padding: 16px 12px 32px 12px;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .form-card {
+      background: white;
+      border-radius: 28px;
+      padding: 20px 18px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+    h1 {
+      font-size: 1.6rem;
+      color: #1a5d7a;
+      margin-bottom: 4px;
+      line-height: 1.2;
+    }
+    .subhead {
+      color: #4a627a;
+      border-left: 3px solid #3aa8c1;
+      padding-left: 12px;
+      margin: 8px 0 16px 0;
+      font-size: 0.85rem;
+    }
+    .banner-img {
+      background: #f0f4fa;
+      border-radius: 20px;
+      padding: 12px;
+      text-align: center;
+      margin: 12px 0;
+    }
+    .banner-img img {
+      max-width: 100%;
+      border-radius: 16px;
+      max-height: 140px;
+      object-fit: cover;
+    }
+    .event-intro {
+      background: #fef7e0;
+      padding: 14px 16px;
+      border-radius: 20px;
+      margin: 16px 0;
+      font-size: 0.85rem;
+      line-height: 1.45;
+    }
+    /* 双排布局：姓名和IC分两行 */
+    .form-row {
+      margin-bottom: 16px;
+    }
+    .form-row label {
+      display: block;
+      font-weight: 600;
+      font-size: 0.85rem;
+      margin-bottom: 6px;
+      color: #2c3e4e;
+    }
+    .form-row input, .form-row select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.95rem;
+      background: white;
+    }
+    /* 两个活动卡片垂直排列 */
+    .event-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin: 20px 0 12px;
+    }
+    .event-card {
+      background: #f9fbfe;
+      border-radius: 24px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+    }
+    .event-card.tioman { border-left: 5px solid #2c7da0; background: #f6fafd; }
+    .event-card.dinner { border-left: 5px solid #d97706; background: #fffaf2; }
+    .event-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .tick-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 12px 0;
+    }
+    .tick-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 500;
+      background: white;
+      padding: 8px 16px;
+      border-radius: 40px;
+      border: 1px solid #cbdbe0;
+    }
+    .tick-label input {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+    .counter-box {
+      background: #eef2fa;
+      border-radius: 30px;
+      padding: 6px 16px;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+    .section-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      margin: 20px 0 12px 0;
+      padding-bottom: 6px;
+      border-bottom: 2px solid #cbdde9;
+    }
+    .family-group {
+      border-radius: 20px;
+      padding: 16px;
+      margin: 16px 0;
+    }
+    .family-group.tioman-bg { background: #e6f2f7; }
+    .family-group.dinner-bg { background: #fff0e0; }
+    .family-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+    /* 家属条目：左对齐，竖排 */
+    .family-entry {
+      background: white;
+      border-radius: 20px;
+      padding: 14px;
+      margin: 12px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      border: 1px solid #dce3ec;
+    }
+    .family-entry input, .family-entry select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border: 1px solid #cbd5e1;
+      font-size: 0.9rem;
+    }
+    .btn-add {
+      background: #e9edf2;
+      border: 1px dashed #4f7ea0;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+    .btn-remove {
+      background: #fff0ed;
+      border: 1px solid #e2b6b0;
+      padding: 8px 16px;
+      border-radius: 30px;
+      cursor: pointer;
+      color: #b23c1c;
+      font-size: 0.8rem;
+      align-self: flex-start;
+    }
+    .info-note {
+      font-size: 0.7rem;
+      color: #4a5568;
+      background: #fef9e6;
+      padding: 10px;
+      border-radius: 14px;
+      margin-top: 10px;
+    }
+    .submit-btn {
+      background: #1f6e43;
+      color: white;
+      font-size: 1rem;
+      padding: 14px 20px;
+      border: none;
+      border-radius: 50px;
+      width: 100%;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 24px;
+    }
+    .status {
+      margin-top: 16px;
+      padding: 12px;
+      border-radius: 24px;
+      text-align: center;
+      font-size: 0.85rem;
+      background: #eef2fa;
+    }
+    .required-star {
+      color: #c2410c;
+    }
+    hr {
+      margin: 12px 0;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+<div class="form-card">
+  <h1>🏝️ 双庆典报名<br><span style="font-size:1rem;">Pendaftaran Acara Dwi</span></h1>
+  <div class="subhead">感谢您这一路的努力与陪伴！公司诚意邀请您参与两场温馨盛会。<br>Terima kasih atas dedikasi anda! Syarikat dengan sukacita menjemput anda ke dua acara bermakna ini.</div>
+
+  <div class="banner-img">
+    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='500' height='140' viewBox='0 0 500 140'%3E%3Crect width='500' height='140' fill='%233a7ca5'/%3E%3Ctext x='50%25' y='45%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='18'%3E🌊 Tioman + 🎉 Anniversary Dinner%3C/text%3E%3Ctext x='50%25' y='70%25' dominant-baseline='middle' text-anchor='middle' fill='%23ffecb3' font-size='12'%3ESambutan Bergaya 2026%3C/text%3E%3C/svg%3E" alt="活动宣传">
+  </div>
+
+  <div class="event-intro">
+    🌟 <strong>致亲爱的伙伴 · Kepada rakan sekerja</strong><br>
+    🏝️ <strong>Tioman 疗愈之旅</strong> — 2026年9月9-11日 (3天2夜)<br>
+    🍽️ <strong>Anniversary Dinner 荣光晚宴</strong> — 2026年9月12日 晚上<br>
+    期待与您共度美好时光。Semoga kita bersama!
+  </div>
+
+  <form id="mainForm">
+    <!-- 填写人基本信息：两行 -->
+    <div class="form-row">
+      <label>👤 姓名 / Nama Penuh <span class="required-star">*</span></label>
+      <input type="text" id="userName" placeholder="例: 陈小明 / Tan Xiao Ming" required>
+    </div>
+    <div class="form-row">
+      <label>🆔 IC / Passport No. <span class="required-star">*</span></label>
+      <input type="text" id="userIdNum" placeholder="IC / Passport" required>
+    </div>
+
+    <!-- 两个活动垂直排列 -->
+    <div class="event-stack">
+      <!-- Tioman Trip -->
+      <div class="event-card tioman">
+        <div class="event-title">🏝️ Tioman Trip</div>
+        <div class="tick-row">
+          <label class="tick-label">
+            <input type="checkbox" id="joinTioman" checked> Sertai Tioman / 参与
+          </label>
+          <span class="counter-box" id="tiomanCounter">👥 1</span>
+        </div>
+        <div style="font-size:0.7rem; color:#2c5a74;">✔ 船注册需 IC/Passport</div>
+      </div>
+      <!-- Anniversary Dinner -->
+      <div class="event-card dinner">
+        <div class="event-title">🍽️ Anniversary Dinner</div>
+        <div class="tick-row">
+          <label class="tick-label">
+            <input type="checkbox" id="joinDinner" checked> Sertai Dinner / 参与
+          </label>
+          <span class="counter-box" id="dinnerCounter">👥 1</span>
+        </div>
+        <div style="font-size:0.7rem; color:#b85c00;">✨ 无需证件 (tanpa dokumen)</div>
+      </div>
+    </div>
+
+    <!-- Tioman 家属区块 (需证件) -->
+    <div class="family-group tioman-bg">
+      <div class="family-header">
+        <span>🏝️ Tioman 携带家属 (需 IC/Passport)<br><span style="font-size:0.7rem;">Tanggungan untuk Tioman (perlu IC/Passport)</span></span>
+        <button type="button" class="btn-add" id="addTiomanFamily">+ Tambah</button>
+      </div>
+      <div id="tiomanFamilyList"></div>
+      <div class="info-note">
+        📌 <strong>中文:</strong> 配偶(已领证)/孩子 公司全付100% · 男女朋友 公司付50%<br>
+        <strong>BM:</strong> Pasangan sah (isteri/suami) / anak: syarikat bayar 100% · Teman lelaki/wanita: syarikat tanggung 50%
+      </div>
+    </div>
+
+    <!-- Anniversary Dinner 家属区块 (无需证件) -->
+    <div class="family-group dinner-bg">
+      <div class="family-header">
+        <span>🍽️ Anniversary Dinner 携带家属 (无需证件)<br><span style="font-size:0.7rem;">Tanggungan untuk Dinner (tanpa IC/Passport)</span></span>
+        <button type="button" class="btn-add" id="addDinnerFamily">+ Tambah</button>
+      </div>
+      <div id="dinnerFamilyList"></div>
+    </div>
+
+    <button type="submit" class="submit-btn">📮 提交报名 · Hantar</button>
+    <div id="formStatus" class="status">✍️ 请完整填写资料 | Sila lengkapkan maklumat</div>
+  </form>
+</div>
+</div>
+
+<script>
+  // ---------- 数据结构 ----------
+  let tiomanFamilies = [];   // { name, idNum, relation }
+  let dinnerFamilies = [];   // { name, relation }
+
+  function updateCounters() {
+    const joinTioman = document.getElementById('joinTioman').checked;
+    const joinDinner = document.getElementById('joinDinner').checked;
+    let tiomanCount = joinTioman ? 1 : 0;
+    tiomanCount += tiomanFamilies.length;
+    let dinnerCount = joinDinner ? 1 : 0;
+    dinnerCount += dinnerFamilies.length;
+    document.getElementById('tiomanCounter').innerHTML = `👥 ${tiomanCount}`;
+    document.getElementById('dinnerCounter').innerHTML = `👥 ${dinnerCount}`;
+  }
+
+  function renderTiomanFamilies() {
+    const container = document.getElementById('tiomanFamilyList');
+    container.innerHTML = '';
+    tiomanFamilies.forEach((fam, idx) => {
+      const div = document.createElement('div');
+      div.className = 'family-entry';
+      div.innerHTML = `
+        <input type="text" placeholder="Nama / 姓名" value="${escapeHtml(fam.name)}" data-tioman-name="${idx}">
+        <input type="text" placeholder="IC / Passport" value="${escapeHtml(fam.idNum)}" data-tioman-id="${idx}">
+        <select data-tioman-rel="${idx}">
+          <option value="wife" ${fam.relation === 'wife' ? 'selected' : ''}>Isteri / 老婆 (100%)</option>
+          <option value="husband" ${fam.relation === 'husband' ? 'selected' : ''}>Suami / 老公 (100%)</option>
+          <option value="child" ${fam.relation === 'child' ? 'selected' : ''}>Anak / 孩子 (100%)</option>
+          <option value="girlfriend" ${fam.relation === 'girlfriend' ? 'selected' : ''}>Teman wanita / 女朋友 (50%)</option>
+          <option value="boyfriend" ${fam.relation === 'boyfriend' ? 'selected' : ''}>Teman lelaki / 男朋友 (50%)</option>
+        </select>
+        <button type="button" class="btn-remove" data-remove-tioman="${idx}">✖ Buang / 移除</button>
+      `;
+      container.appendChild(div);
+    });
+    // 绑定事件
+    document.querySelectorAll('[data-tioman-name]').forEach(inp => {
+      const idx = parseInt(inp.dataset.tiomanName);
+      inp.addEventListener('input', (e) => { tiomanFamilies[idx].name = e.target.value; updateCounters(); });
+    });
+    document.querySelectorAll('[data-tioman-id]').forEach(inp => {
+      const idx = parseInt(inp.dataset.tiomanId);
+      inp.addEventListener('input', (e) => { tiomanFamilies[idx].idNum = e.target.value; });
+    });
+    document.querySelectorAll('[data-tioman-rel]').forEach(sel => {
+      const idx = parseInt(sel.dataset.tiomanRel);
+      sel.addEventListener('change', (e) => { tiomanFamilies[idx].relation = e.target.value; updateCounters(); });
+    });
+    document.querySelectorAll('[data-remove-tioman]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.dataset.removeTioman);
+        tiomanFamilies.splice(idx,1);
+        renderTiomanFamilies();
+        updateCounters();
+      });
+    });
+    updateCounters();
+  }
+
+  function renderDinnerFamilies() {
+    const container = document.getElementById('dinnerFamilyList');
+    container.innerHTML = '';
+    dinnerFamilies.forEach((fam, idx) => {
+      const div = document.createElement('div');
+      div.className = 'family-entry';
+      div.innerHTML = `
+        <input type="text" placeholder="Nama / 姓名" value="${escapeHtml(fam.name)}" data-dinner-name="${idx}">
+        <select data-dinner-rel="${idx}">
+          <option value="wife" ${fam.relation === 'wife' ? 'selected' : ''}>Isteri / 老婆</option>
+          <option value="husband" ${fam.relation === 'husband' ? 'selected' : ''}>Suami / 老公</option>
+          <option value="child" ${fam.relation === 'child' ? 'selected' : ''}>Anak / 孩子</option>
+          <option value="girlfriend" ${fam.relation === 'girlfriend' ? 'selected' : ''}>Teman wanita / 女朋友</option>
+          <option value="boyfriend" ${fam.relation === 'boyfriend' ? 'selected' : ''}>Teman lelaki / 男朋友</option>
+        </select>
+        <button type="button" class="btn-remove" data-remove-dinner="${idx}">✖ Buang</button>
+      `;
+      container.appendChild(div);
+    });
+    document.querySelectorAll('[data-dinner-name]').forEach(inp => {
+      const idx = parseInt(inp.dataset.dinnerName);
+      inp.addEventListener('input', (e) => { dinnerFamilies[idx].name = e.target.value; updateCounters(); });
+    });
+    document.querySelectorAll('[data-dinner-rel]').forEach(sel => {
+      const idx = parseInt(sel.dataset.dinnerRel);
+      sel.addEventListener('change', (e) => { dinnerFamilies[idx].relation = e.target.value; });
+    });
+    document.querySelectorAll('[data-remove-dinner]').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const idx = parseInt(btn.dataset.removeDinner);
+        dinnerFamilies.splice(idx,1);
+        renderDinnerFamilies();
+        updateCounters();
+      });
+    });
+    updateCounters();
+  }
+
+  function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
+
+  // 添加家属
+  document.getElementById('addTiomanFamily').addEventListener('click', () => {
+    tiomanFamilies.push({ name: '', idNum: '', relation: 'wife' });
+    renderTiomanFamilies();
+  });
+  document.getElementById('addDinnerFamily').addEventListener('click', () => {
+    dinnerFamilies.push({ name: '', relation: 'wife' });
+    renderDinnerFamilies();
+  });
+
+  document.getElementById('joinTioman').addEventListener('change', updateCounters);
+  document.getElementById('joinDinner').addEventListener('change', updateCounters);
+
+  // 提交校验（阻止资料不齐）
+  function validateFamilies() {
+    // Tioman 家属：姓名和证件都必须有
+    for (let i=0; i<tiomanFamilies.length; i++) {
+      const f = tiomanFamilies[i];
+      if (!f.name.trim()) return `Tioman 家属 #${i+1} 缺少姓名 / Nama kosong`;
+      if (!f.idNum.trim()) return `Tioman 家属 #${i+1} 缺少 IC/Passport / dokumen kosong`;
+    }
+    // Dinner 家属：只需姓名
+    for (let i=0; i<dinnerFamilies.length; i++) {
+      if (!dinnerFamilies[i].name.trim()) return `Anniversary Dinner 家属 #${i+1} 缺少姓名 / Nama kosong`;
+    }
+    return null;
+  }
+
+  document.getElementById('mainForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const statusDiv = document.getElementById('formStatus');
+    const userName = document.getElementById('userName').value.trim();
+    const userIdNum = document.getElementById('userIdNum').value.trim();
+    if (!userName || !userIdNum) {
+      statusDiv.innerHTML = '❌ 请填写姓名 与 IC/Passport | Sila isi nama dan dokumen';
+      return;
+    }
+    const validationMsg = validateFamilies();
+    if (validationMsg) {
+      statusDiv.innerHTML = '❌ ' + validationMsg;
+      return;
+    }
+    const joinTioman = document.getElementById('joinTioman').checked;
+    const joinDinner = document.getElementById('joinDinner').checked;
+
+    const payload = {
+      timestamp: new Date().toISOString(),
+      user: { name: userName, idNum: userIdNum },
+      events: {
+        tioman: { join: joinTioman, families: tiomanFamilies },
+        dinner: { join: joinDinner, families: dinnerFamilies }
+      }
+    };
+    statusDiv.innerHTML = '⏳ 提交中 / Menghantar...';
+    try {
+      // 替换成你的 GAS Web App URL
+      const API_URL = 'https://script.google.com/macros/s/AKfycbykQqSPyFQOS-5xG3TY3P2tdkB32EB4PHydG7z3WxJ7V2ubxB_cXVKQ79TvI9us5th_uw/exec';
+      await fetch(API_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      statusDiv.innerHTML = '✅ 报名成功！Pendaftaran berjaya！感谢您 ❤️';
+      statusDiv.style.background = '#d9f0e1';
+      // 重置
+      document.getElementById('userName').value = '';
+      document.getElementById('userIdNum').value = '';
+      tiomanFamilies = [];
+      dinnerFamilies = [];
+      renderTiomanFamilies();
+      renderDinnerFamilies();
+      document.getElementById('joinTioman').checked = true;
+      document.getElementById('joinDinner').checked = true;
+      updateCounters();
+    } catch(err) {
+      statusDiv.innerHTML = '❌ 失败，请稍后再试 | Gagal, sila cuba sebentar lagi';
+      console.error(err);
+    }
+  });
+
+  renderTiomanFamilies();
+  renderDinnerFamilies();
+  updateCounters();
+</script>
+</body>
+</html>
