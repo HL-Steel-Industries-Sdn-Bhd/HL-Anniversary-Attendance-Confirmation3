@@ -59,7 +59,6 @@
       font-size: 0.85rem;
       line-height: 1.45;
     }
-    /* 双排布局：姓名和IC分两行 */
     .form-row {
       margin-bottom: 16px;
     }
@@ -78,7 +77,6 @@
       font-size: 0.95rem;
       background: white;
     }
-    /* 两个活动卡片垂直排列 */
     .event-stack {
       display: flex;
       flex-direction: column;
@@ -151,7 +149,6 @@
       font-weight: 700;
       font-size: 0.9rem;
     }
-    /* 家属条目：左对齐，竖排 */
     .family-entry {
       background: white;
       border-radius: 20px;
@@ -246,7 +243,6 @@
   </div>
 
   <form id="mainForm">
-    <!-- 填写人基本信息：两行 -->
     <div class="form-row">
       <label>👤 姓名 / Nama Penuh <span class="required-star">*</span></label>
       <input type="text" id="userName" placeholder="例: 韩美美 / Han Mei Mei" required>
@@ -256,9 +252,7 @@
       <input type="text" id="userIdNum" placeholder="IC / Passport" required>
     </div>
 
-    <!-- 两个活动垂直排列 -->
     <div class="event-stack">
-      <!-- Tioman Trip -->
       <div class="event-card tioman">
         <div class="event-title">🏝️ Tioman Trip</div>
         <div class="tick-row">
@@ -269,7 +263,6 @@
         </div>
         <div style="font-size:0.7rem; color:#2c5a74;">✔ 乘船注册需要证件 Naik boat perlu register IC/Passport</div>
       </div>
-      <!-- Anniversary Dinner -->
       <div class="event-card dinner">
         <div class="event-title">🍽️ Anniversary Dinner</div>
         <div class="tick-row">
@@ -282,7 +275,6 @@
       </div>
     </div>
 
-    <!-- Tioman 家属区块 (需证件) -->
     <div class="family-group tioman-bg">
       <div class="family-header">
         <span>🏝️ Tioman 携带家属 (需 IC/Passport)<br><span style="font-size:0.7rem;">Bawa ahli keluarga untuk Tioman (Perlu IC/Passport)</span></span>
@@ -290,12 +282,12 @@
       </div>
       <div id="tiomanFamilyList"></div>
       <div class="info-note">
-        📌配偶(已领证)/孩子 公司全付100% · 男女朋友 公司付50%<br>
-          Pasangan sah (isteri/suami) / anak: syarikat bayar 100% · Teman lelaki/wanita: syarikat tanggung 50%
+        📌 配偶(已领证)/孩子：公司全付 100%<br>
+        📌 男女朋友/其他家人：公司付 50%<br>
+        Pasangan sah (isteri/suami) / anak: syarikat bayar 100% · Teman lelaki/wanita / keluarga lain: syarikat tanggung 50%
       </div>
     </div>
 
-    <!-- Anniversary Dinner 家属区块 (无需证件) -->
     <div class="family-group dinner-bg">
       <div class="family-header">
         <span>🍽️ Anniversary Dinner 携带家属 (无需证件)<br><span style="font-size:0.7rem;">Bawa ahli keluarga untuk Dinner (Tak perlu IC/Passport)</span></span>
@@ -311,9 +303,8 @@
 </div>
 
 <script>
-  // ---------- 数据结构 ----------
-  let tiomanFamilies = [];   // { name, idNum, relation }
-  let dinnerFamilies = [];   // { name, relation }
+  let tiomanFamilies = [];
+  let dinnerFamilies = [];
 
   function updateCounters() {
     const joinTioman = document.getElementById('joinTioman').checked;
@@ -341,12 +332,12 @@
           <option value="child" ${fam.relation === 'child' ? 'selected' : ''}>Anak / 孩子 (100%)</option>
           <option value="girlfriend" ${fam.relation === 'girlfriend' ? 'selected' : ''}>Teman wanita / 女朋友 (50%)</option>
           <option value="boyfriend" ${fam.relation === 'boyfriend' ? 'selected' : ''}>Teman lelaki / 男朋友 (50%)</option>
+          <option value="other" ${fam.relation === 'other' ? 'selected' : ''}>Keluarga lain / 其他家人 (50%)</option>
         </select>
-        <button type="button" class="btn-remove" data-remove-tioman="${idx}">✖ 移除 / Buang  </button>
+        <button type="button" class="btn-remove" data-remove-tioman="${idx}">✖ 移除 / Buang</button>
       `;
       container.appendChild(div);
     });
-    // 绑定事件
     document.querySelectorAll('[data-tioman-name]').forEach(inp => {
       const idx = parseInt(inp.dataset.tiomanName);
       inp.addEventListener('input', (e) => { tiomanFamilies[idx].name = e.target.value; updateCounters(); });
@@ -384,6 +375,7 @@
           <option value="child" ${fam.relation === 'child' ? 'selected' : ''}>Anak / 孩子</option>
           <option value="girlfriend" ${fam.relation === 'girlfriend' ? 'selected' : ''}>Teman wanita / 女朋友</option>
           <option value="boyfriend" ${fam.relation === 'boyfriend' ? 'selected' : ''}>Teman lelaki / 男朋友</option>
+          <option value="other" ${fam.relation === 'other' ? 'selected' : ''}>Keluarga lain / 其他家人</option>
         </select>
         <button type="button" class="btn-remove" data-remove-dinner="${idx}">✖ 移除 / Buang</button>
       `;
@@ -410,7 +402,6 @@
 
   function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, function(m){if(m==='&') return '&amp;'; if(m==='<') return '&lt;'; if(m==='>') return '&gt;'; return m;}); }
 
-  // 添加家属
   document.getElementById('addTiomanFamily').addEventListener('click', () => {
     tiomanFamilies.push({ name: '', idNum: '', relation: 'wife' });
     renderTiomanFamilies();
@@ -423,15 +414,12 @@
   document.getElementById('joinTioman').addEventListener('change', updateCounters);
   document.getElementById('joinDinner').addEventListener('change', updateCounters);
 
-  // 提交校验（阻止资料不齐）
   function validateFamilies() {
-    // Tioman 家属：姓名和证件都必须有
     for (let i=0; i<tiomanFamilies.length; i++) {
       const f = tiomanFamilies[i];
       if (!f.name.trim()) return `Tioman 家属 #${i+1} 缺少姓名 / Nama kosong`;
       if (!f.idNum.trim()) return `Tioman 家属 #${i+1} 缺少 IC/Passport / dokumen kosong`;
     }
-    // Dinner 家属：只需姓名
     for (let i=0; i<dinnerFamilies.length; i++) {
       if (!dinnerFamilies[i].name.trim()) return `Anniversary Dinner 家属 #${i+1} 缺少姓名 / Nama kosong`;
     }
@@ -465,8 +453,7 @@
     };
     statusDiv.innerHTML = '⏳ 提交中 / Menghantar...';
     try {
-      // 替换成你的 GAS Web App URL
-      const API_URL = 'https://script.google.com/macros/s/AKfycbyOkNgXvIbnClIcycjijOLc-wVga9dwhOTYN6ovO8AiAgvV3_hzhLLYOMRcVCDoTRLiIw/exec';
+      const API_URL = 'https://script.google.com/macros/s/AKfycbx18IrbVujDY7ZWS0WkF_ersikTALgcBlRlqtRnJu1ozFC215LzV9TDHVmUMKXpFmwBlg/exec';
       await fetch(API_URL, {
         method: 'POST',
         mode: 'no-cors',
@@ -475,7 +462,6 @@
       });
       statusDiv.innerHTML = '✅ 报名成功！Pendaftaran berjaya！感谢您 ❤️';
       statusDiv.style.background = '#d9f0e1';
-      // 重置
       document.getElementById('userName').value = '';
       document.getElementById('userIdNum').value = '';
       tiomanFamilies = [];
